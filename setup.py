@@ -1,3 +1,4 @@
+from os.path import dirname, join
 from setuptools import find_packages, setup, Extension
 
 h_files = ["pyorient_native/orientc_reader.h", "pyorient_native/orientc_writer.h",
@@ -13,12 +14,10 @@ pyorient_native = Extension("pyorient_native", sources=["pyorient_native/orientc
                     language="c++", libraries=["stdc++"])
 setup(
     name = "pyorient_native",
-    version="1.2.3.1",
+    version=open(join(dirname(__file__), 'VERSION')).read().strip(),
     description="OrientDB Binary Serialization package for python",
     author="Nikul Ukani",
     author_email="nhu2001@columbia.edu",
     ext_modules = [pyorient_native],
-    packages=find_packages(),
-    url="https://github.com/nikulukani/pyorient_native",
-    download_url="https://github.com/nikulukani/pyorient_native/archive/1.2.3.tar.gz" 
+    packages=find_packages()
     )
