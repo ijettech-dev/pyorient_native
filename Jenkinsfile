@@ -6,29 +6,29 @@ def pythonbuild = new ijet.jenkins.PythonBuild()
 
 def build_stages(Map args=[:]) {
     stage('Preparation') {
-        prepare(args.project, args.branch)
+        pythonbuild.prepare(args.project, args.branch)
     }
 
     args.pyver = '3.6.1'
     stage('Build Component (py36)') {
-        build_wheel(args)
+        pythonbuild.build_wheel(args)
     }
 
     args.pyver = '3.4.6'
     stage('Build Component (py34)') {
-        build_wheel(args)
+        pythonbuild.build_wheel(args)
     }
 
     if (env.BRANCH_NAME =~ /^master/ ) {
         stage('Run Black Duck Scan') {
-            build_and_scan(args)
+            pythonbuild.build_and_scan(args)
         }
     }
     stage('Upload Component') {
-        upload_wheels(args)
+        pythonbuild.upload_wheels(args)
     }
 
-    cleanup_stage()
+    pythonbuild.cleanup_stage()
 }
 
 
